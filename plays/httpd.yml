@@ -1,0 +1,5 @@
+---
+- name: play for apache role
+  hosts: webservers
+  roles:
+    - ./roles/apache
