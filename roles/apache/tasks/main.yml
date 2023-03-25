@@ -1,1 +1,38 @@
+---
+
 # tasks file for apache
+
+- name: Installing {{ httpp_pkg }}
+  yum: 
+    name: "{{ http_pkg }}"
+    state: latest
+
+- name: Starting {{ httpp_srv }}
+  service: 
+    name: "{{ http_pkg }}"
+    state: latest
+
+- name: Starting {{ fw_srv }}
+  service: 
+    name: "{{ fw_pkg }}"
+    state: started
+    enabled: yes
+
+- name: Allowd {{ fw_rule }}
+  firewalld:
+  service: 
+    name: "{{ fw_rule }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: copy template
+  template: 
+    src: index.j2
+    dest: /var/www/html/index.html
+  notify: restart_httpd
+
+
+
+
+
